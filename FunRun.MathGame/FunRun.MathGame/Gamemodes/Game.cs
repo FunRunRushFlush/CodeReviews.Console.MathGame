@@ -13,12 +13,15 @@ public class Game
         int seed = SelectRngSeed();
 
         GameState state = new GameState(gameMode, seed);
+        AnsiConsole.Clear();
+        AnsiConsole.Write(new FigletText(gameMode.ToString()).Centered().Color(Color.Blue));
+        
+        AnsiConsole.MarkupLine($"[dim] Seed: {state.GameSeed} [/]");
+        AnsiConsole.MarkupLine("");
 
-        AnsiConsole.MarkupLine($"[red]{state.GameMode} - {state.GameSeed} [/]");
         while (true)
         {
             var num = GeneratingVariables(digits, gameMode);
-
 
             GeneratingQuestion(num, gameMode);
             long solution = Utils.Calculate(num.a, num.b, gameMode);
@@ -83,8 +86,8 @@ public class Game
     private void GeneratingQuestion((long a, long b) num, GameMode gameMode)
     {
         string mathOperator = Utils.GetOperator(gameMode);
-        AnsiConsole.MarkupLine("What ist the Solution for: ");
-        AnsiConsole.MarkupLine($"\t {num.a} {mathOperator} {num.b}");
+        AnsiConsole.MarkupLine("[yellow]What ist the Solution for: [/] ");
+        AnsiConsole.MarkupLine($"\t [blue]{num.a}[/] [fuchsia]{mathOperator}[/] [blue]{num.b}[/]");
 
     }
 
