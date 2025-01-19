@@ -34,7 +34,7 @@ public class Game
                 AnsiConsole.Write(new FigletText("OVER!").Centered().Color(Color.Red));
 
                 AnsiConsole.MarkupLine($"[red]HighScore : {state.CalcHistory.Count} [/]");
-
+                GameHistory.GameStates.Add(state);
 
                 Console.ReadKey(true);
                 break;
@@ -112,13 +112,14 @@ public class Game
         return (varA, varB);
 
     }
-
+    
     private int SelectRngSeed(int seed = 0)
     {
         if (seed == 0)
         {
             seed = Environment.TickCount;
         }
+        
         _rng = new Random(seed);
 
         return seed;

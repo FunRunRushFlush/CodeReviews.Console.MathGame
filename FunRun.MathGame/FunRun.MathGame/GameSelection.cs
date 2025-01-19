@@ -1,4 +1,5 @@
 ﻿using FunRun.MathGame.Gamemodes;
+using FunRun.MathGame.Model;
 using Spectre.Console;
 
 namespace FunRun.MathGame;
@@ -6,9 +7,12 @@ namespace FunRun.MathGame;
 public class GameSelection
 {
     private Game _game;
-    public GameSelection(Game game)
+    private Highscore _highscore;
+    public GameSelection(Game game,Highscore highscore)
     {
         _game = game;
+        _highscore = highscore; 
+        
     }
     public async Task RunGame()
     {
@@ -17,7 +21,7 @@ public class GameSelection
             AnsiConsole.Clear();
             AnsiConsole.Write(new FigletText("Console.MathGame").Centered().Color(Color.Blue));
 
-            AnsiConsole.MarkupLine("[blue] A minigame provided by the [link=https://thecsharpacademy.com/project/53/math-game.net]C#Acadamy [/][/]");
+            AnsiConsole.MarkupLine("[blue] A minigame inpired by the [link=https://thecsharpacademy.com/project/53/math-game.net]C#Acadamy [/][/]");
             AnsiConsole.MarkupLine("");
 
             var gameModes = Enum.GetValues<GameMode>()
@@ -37,16 +41,16 @@ public class GameSelection
             {
                 return;
             }
-
-            if (selection == "Highscore")
+            else if (selection == "Highscore")
             {
-                //ShowHighscore(); 
-                return;
+                await _highscore.Run();
             }
-
+            else
+            {
+                var selectedGameMode = Enum.Parse<GameMode>(selection);
+                await _game.Run(selectedGameMode);
+            }
         
-            var selectedGameMode = Enum.Parse<GameMode>(selection);
-            await _game.Run(selectedGameMode);
         }
 
     }

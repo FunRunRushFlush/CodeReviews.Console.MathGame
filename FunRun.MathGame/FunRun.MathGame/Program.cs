@@ -15,6 +15,7 @@ static ServiceCollection ConfigureServices()
     var services = new ServiceCollection();
 
     services.AddSingleton<Game>();
+    services.AddSingleton<Highscore>();
     services.AddSingleton<GameSelection>();
 
 
